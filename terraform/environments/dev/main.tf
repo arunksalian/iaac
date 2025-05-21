@@ -3,10 +3,9 @@ provider "ibm" {
   region           = var.region
 }
 
-# Create a new resource group
-resource "ibm_resource_group" "group" {
-  name = "${var.project_name}-${var.environment}-rg"
-  tags = [for k, v in var.tags : "${k}:${v}"]
+# Use existing resource group
+data "ibm_resource_group" "group" {
+  name = "suppliq-dev-rg"
 }
 
 module "vpc" {
@@ -14,9 +13,8 @@ module "vpc" {
 
   project_name    = var.project_name
   environment     = var.environment
-  resource_group  = ibm_resource_group.group.id
+  resource_group  = data.ibm_resource_group.group.id
   region          = var.region
-  subnet_cidr     = "10.240.0.0/24"
   ssh_source_cidr = "0.0.0.0/0"  # More permissive for development
   tags            = var.tags
 }
@@ -27,7 +25,7 @@ module "database" {
   project_name    = var.project_name
   environment     = var.environment
   region          = var.region
-  resource_group  = ibm_resource_group.group.id
+  resource_group  = data.ibm_resource_group.group.id
   tags            = var.tags
   db_password     = var.db_password
   app_db_password = var.app_db_password

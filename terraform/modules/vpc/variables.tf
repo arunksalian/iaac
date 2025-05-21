@@ -9,7 +9,7 @@ variable "environment" {
 }
 
 variable "resource_group" {
-  description = "IBM Cloud Resource Group"
+  description = "Resource group ID"
   type        = string
 }
 
@@ -18,13 +18,8 @@ variable "region" {
   type        = string
 }
 
-variable "subnet_cidr" {
-  description = "CIDR block for the subnet"
-  type        = string
-}
-
 variable "ssh_source_cidr" {
-  description = "Source CIDR block for SSH access"
+  description = "CIDR block for SSH access"
   type        = string
 }
 

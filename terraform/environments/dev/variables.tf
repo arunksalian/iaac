@@ -66,4 +66,9 @@ variable "db_cpu" {
   description = "CPU allocation count"
   type        = number
   default     = 1
+}
+
+variable "resource_group" {
+  description = "Resource group ID"
+  type        = string
 } 
